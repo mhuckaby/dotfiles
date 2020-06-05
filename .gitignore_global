@@ -1,0 +1,11 @@
+build
+
+.DS_Store
+.gradle
+.idea
+.notes-*
+
+*.iml
+
+**/build
+**/out
