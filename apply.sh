@@ -14,9 +14,11 @@ allFiles=('.bash_profile' '.gitignore_global' '.vimrc' '.zshrc')
 for file in ${allFiles[@]}; do
   PATH_BU_SRC=~/${file}
   PATH_BU_DEST=${DIR_BACKUP}/${file}.${BACKUP_SUFFIX}
-
-  cp ${PATH_BU_SRC} ${PATH_BU_DEST}
-  echo "Backed up file ${PATH_BU_SRC} to ${PATH_BU_DEST}"
+  
+  if [ -f ${PATH_BU_SRC} ]; then
+    cp ${PATH_BU_SRC} ${PATH_BU_DEST}
+    echo "Backed up file ${PATH_BU_SRC} to ${PATH_BU_DEST}"
+  fi
 done
 
 for file in ${allFiles[@]}; do
