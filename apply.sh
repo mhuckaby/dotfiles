@@ -1,30 +1,49 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
 set -e
 
-BACKUP_SUFFIX=$(date +%s)
-DIR_BACKUP=~/.dotfiles.orignal
+FILES_ALL=('.bash_profile_functions' '.bash_profile_vc' '.gitignore_global' '.vimrc' '.zshrc')
 
-mkdir -p ${DIR_BACKUP}
+handle_backup_files() {
+  BACKUP=$(date +%s)
+  DIR_BACKUP=~/.dotfiles.orignal/${BACKUP}
 
-allFiles=('.bash_profile' '.gitignore_global' '.vimrc' '.zshrc')
+  mkdir -p ${DIR_BACKUP}
 
-# Keep backup and apply loops separate - if any backup fails do not proceed with overwrite
+  for file in ${FILES_ALL[@]}; do
+    PATH_BU_SRC=~/${file}
+    PATH_BU_DEST=${DIR_BACKUP}/${file}
 
-for file in ${allFiles[@]}; do
-  PATH_BU_SRC=~/${file}
-  PATH_BU_DEST=${DIR_BACKUP}/${file}.${BACKUP_SUFFIX}
-  
-  if [ -f ${PATH_BU_SRC} ]; then
-    cp ${PATH_BU_SRC} ${PATH_BU_DEST}
-    echo "Backed up file ${PATH_BU_SRC} to ${PATH_BU_DEST}"
+    if [ -f ${PATH_BU_SRC} ]; then
+      cp ${PATH_BU_SRC} ${PATH_BU_DEST}
+    fi
+  done
+}
+
+handle_bash_profile_inclusion() {
+  PATH_BASH_PROFILE=~/.bash_profile
+
+  if [ ! -f ${PATH_BASH_PROFILE} ]
+  then
+    touch ${PATH_BASH_PROFILE}
   fi
-done
 
-for file in ${allFiles[@]}; do
-  PATH_DF_SRC=./${file}
-  PATH_DF_DEST=~/${file}
+  HIT=$(cat ~/.bash_profile | grep ". .bash_profile_vc" | xargs)
+  if [ -z "${HIT}" ]
+  then
+    echo ". .bash_profile_vc" >> ~/.bash_profile
+  fi
+}
 
-  cp ${PATH_DF_SRC} ${PATH_DF_DEST}
-  echo "Copied ${PATH_DF_SRC} to ${HOME}/${PATH_DF_DEST}"
-done
+handle_copy_files_vc() {
+  for file in ${FILES_ALL[@]}; do
+    PATH_DF_SRC=./${file}
+    PATH_DF_DEST=~/${file}
+
+    cp ${PATH_DF_SRC} ${PATH_DF_DEST}
+  done
+}
+
+handle_backup_files
+handle_copy_files_vc
+handle_bash_profile_inclusion

@@ -1,0 +1,73 @@
+# zsh ; 19.6.0 Darwin Kernel x86_64
+
+# Docker clean up
+docker-rm-all() {
+  if [ -z "`which docker`" ]
+  then
+    echo "docker not available on path"
+  else
+    docker stop $(docker ps -aq) && docker rm $(docker ps -aq) && docker rmi $(docker images -q)
+  fi
+}
+
+# Emoji :v: (peace)
+e-v() {
+    echo ✌️ | pbcopy
+}
+
+# Emoji/ascii shrug guy
+e-shrug() {
+    echo "¯\\\_(ツ)_/¯" | pbcopy
+}
+
+# Open Google search
+og() {
+  if [ -z "${1}" ]
+  then
+    echo "provide terms"
+  else
+    param="${@}"
+    open "https://www.google.com/search?q=${param}"
+  fi
+}
+
+# Open Jira ticket page
+oj() {
+  if [ -z "${URL_JIRA}" ]
+  then
+    echo "provide base Jira URL as URL_JIRA"
+  elif [ -z "${1}" ]
+  then
+    echo "provide Jira ticket ID as arg 1"
+  else
+    param="${@}"
+    open "${URL_JIRA}/browse/${param}"
+  fi
+}
+
+# Take a note
+note() {
+    echo "`date '+%Y-%m-%d %H:%M:%S '`: $@" >> ~/.notes
+}
+
+# Serve cwd
+s-cwd() {
+  PORT=${1:-8888}
+
+  if [ -z "`which python3`" ]
+  then
+    echo "python3 not available on path"
+  else
+    python3 -m http.server --bind 0.0.0.0 ${PORT}
+  fi
+}
+
+# Change dir to work
+work() {
+  if [ -z "${PATH_WORKSPACE}" ]
+  then
+    echo "PATH_WORKSPACE not set"
+  else
+    cd ${PATH_WORKSPACE}
+  fi
+}

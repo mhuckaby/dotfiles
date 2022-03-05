@@ -1,0 +1,9 @@
+export PATH_WORKSPACE="${HOME}/Documents/workspace"
+export PATH_WORKSPACE_TOOLS="${PATH_WORKSPACE}/tools"
+export PATH="${PATH}:${PATH_WORKSPACE_TOOLS}"
+
+export URL_JIRA=
+
+setopt interactivecomments
+
+. .bash_profile_functions
