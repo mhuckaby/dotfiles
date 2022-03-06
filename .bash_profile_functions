@@ -20,6 +20,11 @@ e-shrug() {
     echo "¯\\\_(ツ)_/¯" | pbcopy
 }
 
+# What's my ipv4
+ipv4() {
+  curl -s 'https://api.ipify.org?format=json' | xargs
+}
+
 # Open Google search
 og() {
   if [ -z "${1}" ]
