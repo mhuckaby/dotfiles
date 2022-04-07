@@ -2,9 +2,9 @@
 
 set -e
 
-FILES_ALL=('.bash_profile_functions' '.bash_profile_vc' '.gitignore_global' '.vimrc' '.zshrc')
+FILES_ALL=('.bash_profile_functions' '.bash_profile_vc' '.gitignore_global' '.vimrc' '.zshenv')
 
-handle_backup_files() {
+handle_file_backup() {
   BACKUP=$(date +%s)
   DIR_BACKUP=~/.dotfiles.orignal/${BACKUP}
 
@@ -28,14 +28,14 @@ handle_bash_profile_inclusion() {
     touch ${PATH_BASH_PROFILE}
   fi
 
-  HIT=$(cat ~/.bash_profile | grep ". .bash_profile_vc" | xargs)
+  HIT=$(cat ~/.bash_profile | grep ". ~/.bash_profile_vc" | xargs)
   if [ -z "${HIT}" ]
   then
-    echo ". .bash_profile_vc" >> ~/.bash_profile
+    echo ". ~/.bash_profile_vc" >> ~/.bash_profile
   fi
 }
 
-handle_copy_files_vc() {
+handle_file_copy_from_version_control() {
   for file in ${FILES_ALL[@]}; do
     PATH_DF_SRC=./${file}
     PATH_DF_DEST=~/${file}
@@ -44,6 +44,6 @@ handle_copy_files_vc() {
   done
 }
 
-handle_backup_files
-handle_copy_files_vc
+handle_file_backup
+handle_file_copy_from_version_control
 handle_bash_profile_inclusion

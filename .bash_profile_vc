@@ -1,9 +1,23 @@
-export PATH_WORKSPACE="${HOME}/Documents/workspace"
+export PATH_WORKSPACE=~/Documents/workspace
 export PATH_WORKSPACE_TOOLS="${PATH_WORKSPACE}/tools"
 export PATH="${PATH}:${PATH_WORKSPACE_TOOLS}"
+
+# Flutter / Dart
+export PATH_FLUTTER="${PATH_WORKSPACE_TOOLS}/flutter/bin"
+export PATH=$PATH:$PATH_FLUTTER
+
+# GoLang
+export GOPATH=~/Documents/workspace/git/go
+export GOBIN=${GOPATH}/bin
+export GOROOT=/usr/local/go
+export PATH=$PATH:$GOBIN
+
+# Java
+export JAVA_HOME="${PATH_WORKSPACE_TOOLS}/jdk-15.0.1.jdk/Contents/Home"
+export PATH=$PATH:$JAVA_HOME/bin
 
 export URL_JIRA=
 
 setopt interactivecomments
 
-. .bash_profile_functions
+. ~/.bash_profile_functions
