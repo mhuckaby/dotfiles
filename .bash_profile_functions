@@ -22,7 +22,12 @@ e-shrug() {
 
 # What's my ipv4
 ipv4() {
-  curl -s 'https://api.ipify.org?format=json' | xargs
+  curl -s 'https://api.ipify.org?format=json'
+}
+
+# What's my ipv6
+ipv6() {
+  curl -s 'https://api64.ipify.org?format=json'
 }
 
 # Open Google search
