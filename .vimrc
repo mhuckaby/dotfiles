@@ -9,7 +9,6 @@ set relativenumber
 set showmatch
 set softtabstop=2
 set tabstop=2
-set expandtab
 set wildmenu
 
 syntax enable
